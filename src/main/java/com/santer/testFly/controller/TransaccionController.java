@@ -1,6 +1,7 @@
 package com.santer.testFly.controller;
 
 import com.santer.testFly.entity.Transaccion;
+import com.santer.testFly.entity.TransferenciaRequest;
 import com.santer.testFly.service.TransaccionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +29,18 @@ public class TransaccionController {
         return new ResponseEntity<>(transacciones, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Transaccion> crearTransaccion(@RequestBody Transaccion transaccion) {
-        Transaccion nuevaTransaccion = transaccionService.crearTransaccion(transaccion);
-        return new ResponseEntity<>(nuevaTransaccion, HttpStatus.CREATED);
+    @PostMapping("/consignar")
+    public void consignar(@RequestBody TransferenciaRequest request) {
+        transaccionService.consignar(request.getNumeroCuentaOrigen(), request.getMonto());
+    }
+
+    @PostMapping("/retirar")
+    public void retirar(@RequestBody TransferenciaRequest request) {
+        transaccionService.retirar(request.getNumeroCuentaOrigen(), request.getMonto());
+    }
+
+    @PostMapping("/transferir")
+    public void transferir(@RequestBody TransferenciaRequest request) {
+        transaccionService.transferir(request.getNumeroCuentaOrigen(), request.getNumeroCuentaDestino(), request.getMonto());
     }
 }

@@ -38,7 +38,7 @@ public class Cliente {
     private String apellidos;
 
     @Column(name = "correo_electronico")
-    @Email(message = "Email should be valid")
+    @Email(message = "Email deberia ser valido")
     private String correoElectronico;
 
     @Column(name = "fecha_nacimiento")
