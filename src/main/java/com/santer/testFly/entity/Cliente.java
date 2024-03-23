@@ -9,6 +9,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.Date;
@@ -28,9 +29,11 @@ public class Cliente {
     @Column(name = "numero_identificacion", unique = true)
     private String numeroIdentificacion;
 
+    @Size(min = 2, message = "El nombre debe tener al menos 2 caracteres")
     @Column(name = "nombres")
     private String nombres;
 
+    @Size(min = 2, message = "El apellido debe tener al menos 2 caracteres")
     @Column(name = "apellidos")
     private String apellidos;
 

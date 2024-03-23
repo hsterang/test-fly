@@ -5,6 +5,10 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class ValidationUtils {
+    private ValidationUtils() {
+        throw new IllegalArgumentException("Error en la creción");
+    }
+
     public static void validarEdad (Date fechaNacimientoCliente) {
         LocalDate fechaLimite = LocalDate.now().minusYears(18);
         LocalDate fechaNacimiento = fechaNacimientoCliente.toInstant()

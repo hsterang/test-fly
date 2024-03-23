@@ -3,7 +3,6 @@ package com.santer.testFly.service;
 import com.santer.testFly.entity.EstadoCuenta;
 import com.santer.testFly.entity.Producto;
 import com.santer.testFly.repository.ProductoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

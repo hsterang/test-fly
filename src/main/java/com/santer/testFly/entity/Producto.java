@@ -21,6 +21,7 @@ import java.util.Random;
 @Entity
 @Table(name = "productos")
 public class Producto {
+    private Random random = new Random();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,7 +65,6 @@ public class Producto {
         }
 
         // Generar el número aleatorio de 8 dígitos
-        Random random = new Random();
         String numeroAleatorio = String.format("%08d", random.nextInt(100000000));
 
         // Concatenar el prefijo y el número aleatorio para formar el número de cuenta

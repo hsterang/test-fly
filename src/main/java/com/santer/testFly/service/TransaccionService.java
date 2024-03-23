@@ -1,8 +1,8 @@
 package com.santer.testFly.service;
 
 import com.santer.testFly.entity.Transaccion;
+import com.santer.testFly.repository.ProductoRepository;
 import com.santer.testFly.repository.TransaccionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +11,10 @@ import java.util.List;
 public class TransaccionService {
 
     private final TransaccionRepository transaccionRepository;
-
-    public TransaccionService(TransaccionRepository transaccionRepository) {
+    private final ProductoRepository productoRepository;
+    public TransaccionService(TransaccionRepository transaccionRepository, ProductoRepository productoRepository) {
         this.transaccionRepository = transaccionRepository;
+        this.productoRepository = productoRepository;
     }
 
     public List<Transaccion> obtenerTodasTransacciones() {
@@ -21,6 +22,7 @@ public class TransaccionService {
     }
 
     public Transaccion crearTransaccion(Transaccion transaccion) {
+
         return transaccionRepository.save(transaccion);
     }
 }
