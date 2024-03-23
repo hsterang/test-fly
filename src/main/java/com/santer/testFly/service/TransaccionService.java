@@ -25,6 +25,7 @@ public class TransaccionService {
 
     @Transactional
     public void consignar(String numeroCuenta, double monto) {
+        log.info("Realizando consignación en cuenta {} por un monto de {}", numeroCuenta, monto);
         if (monto <= 0) {
             throw new IllegalArgumentException("El monto de la consignación debe ser mayor que cero.");
         }
@@ -41,10 +42,12 @@ public class TransaccionService {
         transaccion.setCuentaOrigen(producto);
         transaccion.setMonto(monto);
         transaccionRepository.save(transaccion);
+        log.info("Consignación realizada exitosamente");
     }
 
     @Transactional
     public void retirar(String numeroCuenta, double monto) {
+        log.info("Realizando retiro desde cuenta {} por un monto de {}", numeroCuenta, monto);
         if (monto <= 0) {
             throw new IllegalArgumentException("El monto del retiro debe ser mayor que cero.");
         }
@@ -66,10 +69,12 @@ public class TransaccionService {
         transaccion.setCuentaOrigen(producto);
         transaccion.setMonto(monto);
         transaccionRepository.save(transaccion);
+        log.info("Retiro realizado exitosamente");
     }
 
     @Transactional
     public void transferir(String numeroCuentaOrigen, String numeroCuentaDestino, double monto) {
+        log.info("Realizando transferencia desde cuenta {} a cuenta {} por un monto de {}", numeroCuentaOrigen, numeroCuentaDestino, monto);
         if (numeroCuentaOrigen.equalsIgnoreCase(numeroCuentaDestino)) {
             throw new IllegalArgumentException("La cuenta de destino es la misma que la cuenta de origen.");
         }
@@ -102,5 +107,6 @@ public class TransaccionService {
         transaccionOrigen.setMonto(-monto);
         transaccionOrigen.setFecha(new Date());
         transaccionRepository.save(transaccionOrigen);
+        log.info("Transferencia realizada exitosamente");
     }
 }
