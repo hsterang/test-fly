@@ -17,12 +17,8 @@ public class ProductoService {
         this.productoRepository = productoRepository;
     }
 
-    public List<Producto> obtenerTodosProductos() {
-        return productoRepository.findAll();
-    }
-
-    public Optional<Producto> obtenerProductoPorId(Long id) {
-        return productoRepository.findById(id);
+    public List<Producto> obtenerProductoPorId(String id) {
+        return productoRepository.findByClienteNumeroIdentificacion(id);
     }
 
     public Producto crearProducto(Producto producto) {

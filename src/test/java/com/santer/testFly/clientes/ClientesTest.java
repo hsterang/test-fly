@@ -19,12 +19,26 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ClientesTest {
+class ClientesTest {
 
     private ClienteRepository clienteRepository = mock(ClienteRepository.class);
     private ClienteService clienteService = new ClienteService(clienteRepository);
 
     private ClienteController clienteController = new ClienteController(clienteService);
+
+    @Test
+    void obtenerClientesPorIdentificacion() throws ParseException {
+        // Arrange
+        Cliente cliente = mockClient();
+        when(clienteRepository.findByNumeroIdentificacion(any())).thenReturn(Optional.of(cliente));
+
+        // Act
+        ResponseEntity<Cliente> response = clienteController.obtenerClientePorId("1111111");
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(cliente, response.getBody());
+    }
 
     @Test
     void crearCliente_DeberiaRetornarClienteCreado() throws ParseException {

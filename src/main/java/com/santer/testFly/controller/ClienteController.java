@@ -27,7 +27,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> obtenerClientePorId(@PathVariable Long id) {
+    public ResponseEntity<Cliente> obtenerClientePorId(@PathVariable String id) {
         Optional<Cliente> cliente = clienteService.obtenerClientePorId(id);
         return cliente.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

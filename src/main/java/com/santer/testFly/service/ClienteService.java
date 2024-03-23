@@ -4,7 +4,6 @@ import com.santer.testFly.entity.Cliente;
 import com.santer.testFly.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 import static com.santer.testFly.utils.ValidationUtils.validarEdad;
@@ -18,12 +17,8 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public List<Cliente> obtenerTodosClientes() {
-        return clienteRepository.findAll();
-    }
-
-    public Optional<Cliente> obtenerClientePorId(Long id) {
-        return clienteRepository.findById(id);
+    public Optional<Cliente> obtenerClientePorId(String id) {
+        return clienteRepository.findByNumeroIdentificacion(id);
     }
 
     public Cliente crearCliente(Cliente cliente) {

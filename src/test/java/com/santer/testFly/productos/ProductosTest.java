@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.text.ParseException;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,11 +20,23 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ProductosTest {
+class ProductosTest {
     private ProductoRepository productoRepository = mock(ProductoRepository.class);
     private ProductoService productoService = new ProductoService(productoRepository);
     private ProductoController productoController = new ProductoController(productoService);
+    @Test
+    void obtenerProductosPorIdentificacion() throws ParseException {
+        // Arrange
+        Producto producto = mockProducto();
+        when(productoRepository.findByClienteNumeroIdentificacion(any())).thenReturn(List.of(producto));
 
+        // Act
+        ResponseEntity<List<Producto>> response = productoController.obtenerProductoPorNumeroIdentificacionCliente("1111111");
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(List.of(producto), response.getBody());
+    }
     @Test
     void testCrearProductoConSaldoPositivo() {
         // Arrange

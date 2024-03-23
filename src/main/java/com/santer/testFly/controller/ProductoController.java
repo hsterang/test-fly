@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/productos")
@@ -26,11 +25,14 @@ public class ProductoController {
         this.productoService = productoService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable Long id) {
-        Optional<Producto> producto = productoService.obtenerProductoPorId(id);
-        return producto.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/{numeroIdentificacion}")
+    public ResponseEntity<List<Producto>> obtenerProductoPorNumeroIdentificacionCliente(@PathVariable String numeroIdentificacion) {
+        List<Producto> productos = productoService.obtenerProductoPorId(numeroIdentificacion);
+        if (!productos.isEmpty()) {
+            return new ResponseEntity<>(productos, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
