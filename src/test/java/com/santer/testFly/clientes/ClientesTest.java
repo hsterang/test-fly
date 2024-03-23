@@ -21,10 +21,10 @@ import static org.mockito.Mockito.when;
 
 class ClientesTest {
 
-    private ClienteRepository clienteRepository = mock(ClienteRepository.class);
-    private ClienteService clienteService = new ClienteService(clienteRepository);
+    private final ClienteRepository clienteRepository = mock(ClienteRepository.class);
+    private final ClienteService clienteService = new ClienteService(clienteRepository);
 
-    private ClienteController clienteController = new ClienteController(clienteService);
+    private final ClienteController clienteController = new ClienteController(clienteService);
 
     @Test
     void obtenerClientesPorIdentificacion() throws ParseException {
@@ -39,6 +39,18 @@ class ClientesTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(cliente, response.getBody());
     }
+    @Test
+    void obtenerClientesPorIdentificacionNotFound() throws ParseException {
+        // Arrange
+        when(clienteRepository.findByNumeroIdentificacion(any())).thenReturn(Optional.empty());
+
+        // Act
+        ResponseEntity<Cliente> response = clienteController.obtenerClientePorId("1111111");
+
+        // Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
 
     @Test
     void crearCliente_DeberiaRetornarClienteCreado() throws ParseException {
@@ -68,6 +80,20 @@ class ClientesTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(cliente, response.getBody());
+    }
+
+    @Test
+    void actualizarCliente_DeberiaRetornarClienteActualizadoNotFound() throws ParseException {
+        // Arrange
+        Long id = 1L;
+        Cliente cliente = mockClient();
+        when(clienteRepository.findById(any())).thenReturn(Optional.empty());
+
+        // Act
+        ResponseEntity<Cliente> response = clienteController.actualizarCliente(id, cliente);
+
+        // Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test

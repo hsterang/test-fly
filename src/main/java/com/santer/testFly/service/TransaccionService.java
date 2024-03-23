@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,20 +23,13 @@ public class TransaccionService {
         this.productoRepository = productoRepository;
     }
 
-    public List<Transaccion> obtenerTodasTransacciones() {
-        return transaccionRepository.findAll();
-    }
-
     @Transactional
     public void consignar(String numeroCuenta, double monto) {
-        log.info(numeroCuenta);
-
-        Optional<Producto> optionalProducto = productoRepository.findByNumeroCuenta(numeroCuenta);
-        Producto producto = optionalProducto.orElseThrow(() -> new IllegalArgumentException("El producto con el número de cuenta especificado no existe."));
-
         if (monto <= 0) {
             throw new IllegalArgumentException("El monto de la consignación debe ser mayor que cero.");
         }
+        Optional<Producto> optionalProducto = productoRepository.findByNumeroCuenta(numeroCuenta);
+        Producto producto = optionalProducto.orElseThrow(() -> new IllegalArgumentException("El producto con el número de cuenta especificado no existe."));
 
         double saldoActual = producto.getSaldo();
         double nuevoSaldo = saldoActual + monto;
@@ -53,13 +45,12 @@ public class TransaccionService {
 
     @Transactional
     public void retirar(String numeroCuenta, double monto) {
-        Optional<Producto> optionalProducto = productoRepository.findByNumeroCuenta(numeroCuenta);
-
-        Producto producto = optionalProducto.orElseThrow(() -> new IllegalArgumentException("El producto con el número de cuenta especificado no existe."));
-
         if (monto <= 0) {
             throw new IllegalArgumentException("El monto del retiro debe ser mayor que cero.");
         }
+        Optional<Producto> optionalProducto = productoRepository.findByNumeroCuenta(numeroCuenta);
+
+        Producto producto = optionalProducto.orElseThrow(() -> new IllegalArgumentException("El producto con el número de cuenta especificado no existe."));
 
         double saldoActual = producto.getSaldo();
         if (saldoActual < monto) {
