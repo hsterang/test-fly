@@ -38,7 +38,6 @@ public class ClienteService {
             validarEdad(cliente.getFechaNacimiento());
             return clienteRepository.save(cliente);
         } else {
-            // Manejar la excepción de cliente no encontrado
             return null;
         }
     }

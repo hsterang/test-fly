@@ -23,12 +23,6 @@ public class TransaccionController {
         this.transaccionService = transaccionService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Transaccion>> obtenerTodasTransacciones() {
-        List<Transaccion> transacciones = transaccionService.obtenerTodasTransacciones();
-        return new ResponseEntity<>(transacciones, HttpStatus.OK);
-    }
-
     @PostMapping("/consignar")
     public void consignar(@RequestBody TransferenciaRequest request) {
         transaccionService.consignar(request.getNumeroCuentaOrigen(), request.getMonto());

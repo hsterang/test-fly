@@ -39,7 +39,6 @@ public class ProductoService {
             producto.setId(id);
             return productoRepository.save(producto);
         } else {
-            // Manejar la excepción de producto no encontrado
             return null;
         }
     }

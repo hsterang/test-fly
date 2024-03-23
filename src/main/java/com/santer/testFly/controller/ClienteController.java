@@ -26,12 +26,6 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Cliente>> obtenerTodosClientes() {
-        List<Cliente> clientes = clienteService.obtenerTodosClientes();
-        return new ResponseEntity<>(clientes, HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> obtenerClientePorId(@PathVariable Long id) {
         Optional<Cliente> cliente = clienteService.obtenerClientePorId(id);

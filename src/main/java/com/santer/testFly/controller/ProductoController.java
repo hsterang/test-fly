@@ -26,12 +26,6 @@ public class ProductoController {
         this.productoService = productoService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Producto>> obtenerTodosProductos() {
-        List<Producto> productos = productoService.obtenerTodosProductos();
-        return new ResponseEntity<>(productos, HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable Long id) {
         Optional<Producto> producto = productoService.obtenerProductoPorId(id);
